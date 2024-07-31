@@ -1,4 +1,8 @@
-# kickstart.nvim
+# my kickstart.nvim config
+
+After ~8 years of using and updating the same vim config (over 2000 lines of undocumented code; half of which I have no clue why I even installed), I decided to update my neovim config. 
+
+This is just an updated fork of the awesome kickstart.nvim repository
 
 ## Introduction
 
