@@ -216,6 +216,33 @@ if not vim.uv.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- for conda environments to work well with pyright
+local function get_python_path(workspace)
+  local conda_list = vim.fn.system 'conda env list'
+  local lines = vim.split(conda_list, '\n')
+  local cwd = vim.fn.getcwd()
+
+  for _, line in ipairs(lines) do
+    local name, path = line:match '([%w_-]+)%s+%*?%s+(.+)'
+    if name and path then
+      if vim.fn.isdirectory(path) == 1 and cwd:find(path, 1, true) then
+        return vim.fn.trim(vim.fn.system('conda run -n ' .. name .. ' which python'))
+      end
+    end
+  end
+
+  for _, line in ipairs(lines) do
+    if line:find '*' then
+      local name = line:match '([%w_-]+)%s+%*'
+      if name then
+        return vim.fn.trim(vim.fn.system('conda run -n ' .. name .. ' which python'))
+      end
+    end
+  end
+
+  return vim.fn.exepath 'python3' or vim.fn.exepath 'python' or 'python'
+end
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -580,7 +607,20 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-
+        pyright = {
+          on_init = function(client)
+            client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+          end,
+          settings = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = 'workspace',
+              },
+            },
+          },
+        },
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
