@@ -2,7 +2,7 @@
 
 After ~8 years of using and updating the same vim config (over 2000 lines of undocumented code; half of which I have no clue why I even installed), I decided to update my neovim config. 
 
-This is just an updated fork of the awesome kickstart.nvim repository. I updated it with my keybinding preferences and added a few plugins I cannot live without (and ofcourse an updated colorscheme as well). If you find this useful, please **DO NOT** star **my** repository; all credit goes to [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim?tab=readme-ov-file). 
+This is just an updated fork of the awesome kickstart.nvim repository. I updated it with my keybinding preferences and added a few plugins I cannot live without (and ofcourse, an updated colorscheme as well). If you find this useful, please **DO NOT** star **my** repository; all credit goes to [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim?tab=readme-ov-file). 
 
 ## Introduction
 
