@@ -192,7 +192,11 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
+<<<<<<< HEAD
 
+=======
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+>>>>>>> merge-branch
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -922,6 +926,41 @@ require('lazy').setup({
       'github/copilot.vim',
     },
   },
+<<<<<<< HEAD
+=======
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
+  {
+    'ggandor/leap.nvim',
+    keys = {
+      { 'f', mode = { 'n', 'x', 'o' }, desc = 'Leap forward' },
+      { 'F', mode = { 'n', 'x', 'o' }, desc = 'Leap backward' },
+      { 'gf', mode = { 'n', 'x', 'o' }, desc = 'Leap from window' },
+    },
+    config = function()
+      local leap = require 'leap'
+      leap.add_default_mappings(false)
+      vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<Plug>(leap-forward)')
+      vim.keymap.set({ 'n', 'x', 'o' }, 'F', '<Plug>(leap-backward)')
+      vim.keymap.set({ 'n', 'x', 'o' }, 'gf', '<Plug>(leap-from-window)')
+    end,
+  },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  },
+>>>>>>> merge-branch
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --
   --  Here are some example plugins that I've included in the Kickstart repository.
