@@ -192,11 +192,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
-<<<<<<< HEAD
 
-=======
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
->>>>>>> merge-branch
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -926,8 +923,6 @@ require('lazy').setup({
       'github/copilot.vim',
     },
   },
-<<<<<<< HEAD
-=======
   {
     'kylechui/nvim-surround',
     version = '*', -- Use for stability; omit to use `main` branch for the latest features
@@ -960,7 +955,6 @@ require('lazy').setup({
     dependencies = { { 'echasnovski/mini.icons', opts = {} } },
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
->>>>>>> merge-branch
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --
   --  Here are some example plugins that I've included in the Kickstart repository.
@@ -977,7 +971,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
+  --    For additional information, see `:help lazy.nvim-lazy.nvim-strcturing-your-plugins`
   -- { import = 'custom.plugins' },
 }, {
   ui = {
