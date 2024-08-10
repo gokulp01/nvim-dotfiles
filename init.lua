@@ -189,7 +189,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -918,6 +917,8 @@ require('lazy').setup({
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
+  --
+
   {
     {
       'github/copilot.vim',
@@ -953,7 +954,41 @@ require('lazy').setup({
     opts = {},
     -- Optional dependencies
     dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+    config = function()
+      require('oil').setup {
+        default_file_explorer = true,
+        delete_to_trash = true,
+        view_options = {
+          show_hidden = true,
+          natural_order = true,
+          is_always_hidden = function(name, _)
+            return name == '..' or name == '.git'
+          end,
+        },
+        float = {
+          padding = 2,
+          max_width = 90,
+          max_height = 0,
+        },
+        win_options = {
+          wrap = true,
+          winblend = 0,
+        },
+        keymaps = {
+          ['<C-c>'] = false,
+          ['q'] = 'actions.close',
+        },
+      }
+      -- Configuration here, or leave empty to use defaults
+    end,
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    opts = {},
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
   },
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --
