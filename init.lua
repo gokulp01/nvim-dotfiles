@@ -109,7 +109,7 @@ vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
+vim.opt_local.conceallevel = 1
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -191,6 +191,36 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
+--some obsidian specific keymaps
+vim.keymap.set('n', '<leader>oo', ':cd /Users/cockroach/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/inbox<cr>')
+--
+-- convert note to template and remove leading white space
+vim.keymap.set('n', '<leader>on', function()
+  -- Execute the ObsidianTemplate command
+  vim.cmd 'ObsidianTemplate note'
+
+  -- Get the current buffer contents
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Find the first non-empty line
+  local first_non_empty = 1
+  for i, line in ipairs(lines) do
+    if line:match '%S' then
+      first_non_empty = i
+      break
+    end
+  end
+
+  -- Remove leading empty lines if they exist
+  if first_non_empty > 1 then
+    vim.api.nvim_buf_set_lines(0, 0, first_non_empty - 1, false, {})
+  end
+end)
+-- strip date from note title and replace dashes with spaces
+-- must have cursor on title
+vim.keymap.set('n', '<leader>of', ':s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>')
+--
+-- oil keymaps
 
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 -- Highlight when yanking (copying) text
@@ -918,6 +948,34 @@ require('lazy').setup({
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
   --
+  --
+  --
+  {
+    'epwalsh/obsidian.nvim',
+    version = '*', -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = 'markdown',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {
+      workspaces = {
+        {
+          name = 'personal',
+          path = '/Users/cockroach/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault',
+        },
+      },
+      notes_subdir = 'inbox',
+      new_notes_location = 'notes_subdir',
+
+      disable_frontmatter = true,
+      templates = {
+        subdir = 'templates',
+        date_format = '%Y-%m-%d',
+        time_format = '%H:%M:%S',
+      },
+    },
+  },
   {
     'christoomey/vim-tmux-navigator',
     cmd = {
@@ -940,6 +998,27 @@ require('lazy').setup({
       'github/copilot.vim',
     },
   },
+
+  {
+    'cameron-wags/rainbow_csv.nvim',
+    config = true,
+    ft = {
+      'csv',
+      'tsv',
+      'csv_semicolon',
+      'csv_whitespace',
+      'csv_pipe',
+      'rfc_csv',
+      'rfc_semicolon',
+    },
+    cmd = {
+      'RainbowDelim',
+      'RainbowDelimSimple',
+      'RainbowDelimQuoted',
+      'RainbowMultiDelim',
+    },
+  },
+
   {
     'kylechui/nvim-surround',
     version = '*', -- Use for stability; omit to use `main` branch for the latest features
